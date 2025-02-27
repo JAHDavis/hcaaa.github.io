@@ -12,9 +12,9 @@ function parseOrganiserCsv(csvText) {
     .map(columns => new Event(...columns));
 }
 
-const organiserCsvData = `Herts SAA,Hertfordshire Schools Athletics Association,The HSAA is responsible for organising county schools championships within Hertfordshire, and also puts on a schools league.`
+const organiserCsvData = `Herts SAA,Hertfordshire Schools Athletics Association,The HSAA is responsible for organising county schools championships within Hertfordshire, and also puts on a schools league.`;
 
-const organisers = parseOrganiserCsv(organiserCsvData)
+const organisers = parseOrganiserCsv(organiserCsvData);
 
 function selectOrganiserByShortName(shortName) {
   return organisers.find(organiser => organiser.shortName === shortName);
