@@ -112,3 +112,7 @@ const eventCsvData = `1,HSAA Academies Cup,Indoor Schools Matches,Herts SAA,13/0
 88,Dacorum District Champs,Schools District Champs,Herts SAA,02/07/2025,Hemel Hempstead,TF,,`
 
 const events = parseEventCsv(eventCsvData)
+
+function selectEventById(eventID) {
+  return events.find(event => event.eventID === eventID);
+}
