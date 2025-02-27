@@ -133,3 +133,7 @@ const events = parseEventCsv(eventCsvData)
 function selectEventById(eventID) {
   return events.find(event => event.eventID === eventID);
 }
+
+function selectEventsByOrganiser(shortName) {
+  return events.filter(event => event.organiser === shortName);
+}
