@@ -9,7 +9,7 @@ class Organiser {
 function parseOrganiserCsv(csvText) {
   return csvText.split('\n')
     .map(row => row.split(',').map(item => item.trim()))
-    .map(columns => new Event(...columns));
+    .map(columns => new Organiser(...columns));
 }
 
 const organiserCsvData = `Herts SAA,Hertfordshire Schools Athletics Association,The HSAA is responsible for organising county schools championships within Hertfordshire and also puts on a schools league.
