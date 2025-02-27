@@ -48,6 +48,7 @@
     <div class="header-bar">
         Hertfordshire Officials Events List
     </div>
+    <div id="infodiv"></div>
     <div id="eventsdiv"></div>
     <div class="overlay-card" id="overlayCard">
         <div class="card">
@@ -61,6 +62,9 @@
     <script src="js/events.js"></script>
     <script src="js/organisers.js"></script>
     <script>
+        const infoDiv = document.getElementById('infodiv');
+        const eventsDiv = document.getElementById('eventsdiv');
+
         const params = new URLSearchParams(window.location.search);
         const organiser = params.get("organiser");
         if (organiser) { 
@@ -68,8 +72,15 @@
         } else {
             eventsList = events
         };
+
+        if (organiser) {
+            organiserObj = ‎selectOrganiserByShortName‎(organiser)
+            infoDiv.innerHTML = `<b>${organiserObj.shortName}</b> (${organiserObj.fullName}): ${organiserObj.description}
+
+            ${organiserObj.shortName} has ${eventsList.length} competitions listed.
+            `;
+        }
         
-        const eventsDiv = document.getElementById('eventsdiv');
         const table = document.createElement('table');
         table.classList.add('table');
         const thead = document.createElement('thead');
