@@ -13,6 +13,7 @@ class Event {
   toString() {
     return `${this.eventName} - ${this.eventDate}`;
   }
+}
 
 function parseEventCsv(csvText) {
   return csvText.split('\n')
