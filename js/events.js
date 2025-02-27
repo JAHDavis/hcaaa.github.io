@@ -19,6 +19,18 @@ class Event {
     const options = { day: 'numeric', month: 'short', year: 'numeric' };
     const formattedDate = this.eventDate.toLocaleDateString('en-GB', options);
   }
+
+  prettyTimings() {
+    if (this.startTime && this.finishTime) {
+      return `${this.startTime}-${this.finishTime}`;
+    } else if (this.startTime) {
+      return `${this.startTime} onwards`;
+    } else if (this.finishTime) {
+      return `Until ${this.finishTime}`;
+    } else {
+      return '';
+    }
+  }
 }
 
 function parseEventCsv(csvText) {
