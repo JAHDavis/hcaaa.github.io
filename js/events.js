@@ -19,6 +19,7 @@ function parseEventCsv(csvText) {
   return csvText.split('\n')
     .map(row => row.split(',').map(item => item.trim()))
     .map(columns => new Event(...columns));
+}
 
 const eventCsvData = ```
 HSAA Academies Cup,Indoor Schools Matches,Herts SAA,13/03/2025,Lee Valley (i),iTF,,
