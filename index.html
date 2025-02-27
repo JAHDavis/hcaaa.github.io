@@ -38,9 +38,12 @@
         const tbody = document.createElement('tbody');
         events.forEach(event => {
             const row = document.createElement('tr');
+            const eventDate = new Date(event.eventDate);
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            const formattedDate = eventDate.toLocaleDateString('en-GB', options);
             row.innerHTML = `
                 <td>${event.eventName}</td>
-                <td>${event.eventDate}</td>
+                <td>${formattedDate}</td>
                 <td>${event.venue}</td>
             `;
             tbody.appendChild(row);
