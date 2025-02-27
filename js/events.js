@@ -21,7 +21,7 @@ function parseEventCsv(csvText) {
     .map(columns => new Event(...columns));
 }
 
-const eventCsvData = ```
+const eventCsvData = `
 HSAA Academies Cup,Indoor Schools Matches,Herts SAA,13/03/2025,Lee Valley (i),iTF,,
 HSAA League,Indoor Schools Matches,Herts SAA,24/03/2025,Lee Valley (i),iTF,,
 Hertfordshire Schools Pentathlon Championships,County Schools Champs,Herts SAA,24/04/2025,Stevenage,TF,09:00,16:00
@@ -108,6 +108,6 @@ Eastern Combined Events Championships,Regional Champs,Eastern AA,28/09/2025,Pete
 Hertfordshire League Plate Final,Schools League,Herts SAA,30/06/2025,Hemel Hempstead,TF,14:00,17:15
 Hertfordshire League Final,Schools League,Herts SAA,01/07/2025,Hemel Hempstead,TF,14:00,17:15
 Dacorum District Champs,Schools District Champs,Herts SAA,02/07/2025,Hemel Hempstead,TF,,
-```
+`
 
 const events = parseEventCsv(eventCsvData)
