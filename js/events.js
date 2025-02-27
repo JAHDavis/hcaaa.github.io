@@ -26,7 +26,7 @@ const eventCsvData = `1,HSAA Academies Cup,Indoor Schools Matches,Herts SAA,13/0
 2,University of Leicester Open Meeting,Open Meeting,Uni of Leicester,22/03/2025,Saffron Lane,TF,,
 3,HSAA League,Indoor Schools Matches,Herts SAA,24/03/2025,Lee Valley (i),iTF,,
 4,Hertfordshire Schools Pentathlon Championships,County Schools Champs,Herts SAA,24/04/2025,Stevenage,TF,09:00,16:00
-5,"Steeplechase, Walks & Endurance Festival",County Champs,West Suffolk AC,26/04/2025,Bury St Edmunds,TF,,
+5,Steeplechase Walks & Endurance Festival,County Champs,West Suffolk AC,26/04/2025,Bury St Edmunds,TF,,
 6,Hertfordshire League Round 1,Schools League,Herts SAA,29/04/2025,Stevenage,TF,16:30,18:30
 7,Hertfordshire League Round 1,Schools League,Herts SAA,29/04/2025,Hemel Hempstead,TF,16:30,18:30
 8,Hertfordshire League Round 1,Schools League,Herts SAA,29/04/2025,Watford,TF,16:30,18:30
@@ -109,7 +109,6 @@ const eventCsvData = `1,HSAA Academies Cup,Indoor Schools Matches,Herts SAA,13/0
 85,Eastern Combined Events Championships,Regional Champs,Eastern AA,28/09/2025,Peterborough,TF,,
 86,Hertfordshire League Plate Final,Schools League,Herts SAA,30/06/2025,Hemel Hempstead,TF,14:00,17:15
 87,Hertfordshire League Final,Schools League,Herts SAA,01/07/2025,Hemel Hempstead,TF,14:00,17:15
-88,Dacorum District Champs,Schools District Champs,Herts SAA,02/07/2025,Hemel Hempstead,TF,,
-`
+88,Dacorum District Champs,Schools District Champs,Herts SAA,02/07/2025,Hemel Hempstead,TF,,`
 
 const events = parseEventCsv(eventCsvData)
