@@ -17,7 +17,7 @@ class Event {
 
   prettyDate() {
     const options = { day: 'numeric', month: 'short', year: 'numeric' };
-    const formattedDate = this.eventDate.toLocaleDateString('en-GB', options);
+    return this.eventDate.toLocaleDateString('en-GB', options);
   }
 
   prettyTimings() {
