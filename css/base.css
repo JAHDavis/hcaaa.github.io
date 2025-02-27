@@ -1,0 +1,69 @@
+* {
+  font-family: "Funnel Sans", serif;
+}
+
+.funnel-sans-extralight {
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.funnel-sans-light {
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.funnel-sans-regular {
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.funnel-sans-semibold {
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.funnel-sans-bold {
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.funnel-sans-black {
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.funnel-sans-extralight-italic {
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.funnel-sans-light-italic {
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.funnel-sans-regular-italic {
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.funnel-sans-semibold-italic {
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.funnel-sans-bold-italic {
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: italic;
+}
