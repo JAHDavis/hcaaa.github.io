@@ -73,6 +73,9 @@
             eventsList = events;
         };
 
+        console.log(organiser);
+        console.log(organisers);
+        console.log(selectOrganiserByShortName('Herts SAA'));
         if (organiser) {
             const organiserObj = ‎selectOrganiserByShortName(organiser);
             infoDiv.innerHTML = `<b>${organiserObj.shortName}</b> (${organiserObj.fullName}): ${organiserObj.description}
