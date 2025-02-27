@@ -68,13 +68,13 @@
         const params = new URLSearchParams(window.location.search);
         const organiser = params.get("organiser");
         if (organiser) { 
-            eventsList = selectEventsByOrganiser(organiser)
+            eventsList = selectEventsByOrganiser(organiser);
         } else {
-            eventsList = events
+            eventsList = events;
         };
 
         if (organiser) {
-            organiserObj = ‎selectOrganiserByShortName‎(organiser)
+            organiserObj = ‎selectOrganiserByShortName‎(organiser);
             infoDiv.innerHTML = `<b>${organiserObj.shortName}</b> (${organiserObj.fullName}): ${organiserObj.description}
 
             ${organiserObj.shortName} has ${eventsList.length} competitions listed.
