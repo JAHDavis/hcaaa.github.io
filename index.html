@@ -80,7 +80,7 @@
                 <td>${event.eventName}</td>
                 <td>${event.prettyDate()}</td>
                 <td>${event.venue}</td>
-                <td><button class="btn btn-primary" onclick="showCard('${event.eventID}', '${formattedDate}', '${event.venue}')">Details</button></td>
+                <td><button class="btn btn-primary" onclick="showCard('${event.eventID}')">Details</button></td>
             `;
             tbody.appendChild(row);
         });
