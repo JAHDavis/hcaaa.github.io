@@ -2,6 +2,11 @@
   font-family: "Funnel Sans", serif;
 }
 
+.btn-primary {
+  background-color: #C70039 !important;
+  border-color: #C70039 !important;
+}
+
 .funnel-sans-extralight {
   font-optical-sizing: auto;
   font-weight: 200;
