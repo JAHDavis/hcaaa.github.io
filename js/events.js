@@ -14,6 +14,11 @@ class Event {
   toString() {
     return `${this.eventName} - ${this.eventDate}`;
   }
+
+  prettyDate() {
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    const formattedDate = this.eventDate.toLocaleDateString('en-GB', options);
+  }
 }
 
 function parseEventCsv(csvText) {
