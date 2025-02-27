@@ -59,7 +59,16 @@
         </div>
     </div>
     <script src="js/events.js"></script>
+    <script src="js/organisers.js"></script>
     <script>
+        const params = new URLSearchParams(window.location.search);
+        const organiser = params.get("organiser");
+        if (organiser) { 
+            eventsList = selectEventsByOrganiser(organiser)
+        } else {
+            eventsList = events
+        };
+        
         const eventsDiv = document.getElementById('eventsdiv');
         const table = document.createElement('table');
         table.classList.add('table');
@@ -74,7 +83,7 @@
         `;
         table.appendChild(thead);
         const tbody = document.createElement('tbody');
-        events.forEach(event => {
+        eventsList.forEach(event => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${event.eventName}</td>
