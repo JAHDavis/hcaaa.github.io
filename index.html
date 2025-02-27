@@ -76,14 +76,11 @@
         const tbody = document.createElement('tbody');
         events.forEach(event => {
             const row = document.createElement('tr');
-            const eventDate = new Date(event.eventDate);
-            const options = { day: 'numeric', month: 'short', year: 'numeric' };
-            const formattedDate = eventDate.toLocaleDateString('en-GB', options);
             row.innerHTML = `
                 <td>${event.eventName}</td>
-                <td>${formattedDate}</td>
+                <td>${event.prettyDate()}</td>
                 <td>${event.venue}</td>
-                <td><button class="btn btn-primary" onclick="showCard('${event.eventName}', '${formattedDate}', '${event.venue}')">Details</button></td>
+                <td><button class="btn btn-primary" onclick="showCard('${event.eventID}', '${formattedDate}', '${event.venue}')">Details</button></td>
             `;
             tbody.appendChild(row);
         });
@@ -91,13 +88,21 @@
         table.appendChild(tbody);
         eventsDiv.appendChild(table);
 
-        function showCard(eventName, eventDate, venue) {
+        function showCard(eventID) {
             const cardBody = document.getElementById('cardBody');
+            const selectedEvent = selectEventById(eventID);
             cardBody.innerHTML = `
-                <p><strong>Event Name:</strong> ${eventName}</p>
-                <p><strong>Event Date:</strong> ${eventDate}</p>
-                <p><strong>Venue:</strong> ${venue}</p>
+                <p><strong>Name:</strong> ${selectedEvent.eventName}</p>
+                <p><strong>Category:</strong> ${selectedEvent.eventCategory}</p>
+                <p><strong>Organiser</strong> ${selectedEvent.organiser}</p>
+                <p><strong>Date:</strong> ${selectedEvent.prettyDate()}</p>
+                <p><strong>Venue:</strong> ${selectedEvent.venue}</p>
+                <p><strong>Discipline:</strong> ${selectedEvent.discipline}</p>
             `;
+            const timings = selectedEvent.prettyTimings();
+            if (timings) {
+                cardBody.innerHTML += `<p><strong>Timings:</strong> ${timings}</p>`;
+            }
             document.getElementById('overlayCard').style.display = 'flex';
         }
 
