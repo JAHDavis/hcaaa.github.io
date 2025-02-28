@@ -1,3 +1,5 @@
+let officials = [];
+
 class Official {
   constructor(officialID, firstName, lastName) {
     if (isNaN(officialID)) {
@@ -19,9 +21,15 @@ function parseOfficialCsv(csvText) {
     .map(columns => new Official(...columns));
 }
 
-const officialCsvData = `1,James,Davis`;
-
-const officials = parseOfficialCsv(officialCsvData);
+async function loadOfficialCsvData() {
+  const response = await fetch('data/officials.csv');
+  if (!response.ok) {
+    console.error('Error fetching officials CSV file');
+    return;
+  }
+  const csvText = await response.text();
+  officials = parseOfficialCsv(csvText);
+}
 
 function selectOfficialById(officialID) {
   return officials.find(official => official.officialID === officialID);

@@ -28,6 +28,13 @@
             padding: 10px;
             font-size: 15px;
         }
+        .loading-bar {
+            background-color: #000;
+            color: #FFF;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 20px;
+        }
         .reset-bar {
             background-color: #000;
             text-align: center;
@@ -57,7 +64,7 @@
         }
         .btn-close {
             position: absolute;
-            right: 0;
+            right: 10px;
         }
         .officials-table {
             width: 100%;
@@ -77,8 +84,9 @@
     <div class="header-bar">
         Hertfordshire Officials Events List
     </div>
-    <div class="subheader-bar" id="infodiv" style="display: none"></div>
-    <div class="reset-bar" id="resetdiv" style="display: none"><a class="reset-a-tag" href="./">Reset Filter</a></div>
+    <div class="subheader-bar" id="infodiv" style="display: none;"></div>
+    <div class="reset-bar" id="resetdiv" style="display: none;"><a class="reset-a-tag" href="./">Reset Filter</a></div>
+    <div class="loading-bar" id="loadingdiv" style="display: none;"></div>
     <div id="eventsdiv"></div>
     <div class="overlay-card" id="overlayCard">
         <div class="card">
@@ -94,59 +102,97 @@
     <script src="js/officials.js"></script>
     <script src="js/availability.js"></script>
     <script>
+        const loadingDiv = document.getElementById('loadingdiv');
         const infoDiv = document.getElementById('infodiv');
         const eventsDiv = document.getElementById('eventsdiv');
         const resetDiv = document.getElementById('resetdiv');
-
         const params = new URLSearchParams(window.location.search);
         const organiser = params.get("organiser");
 
-        if (organiser) {
-            organiserObj = selectOrganiserByShortName(organiser);
-            eventsList = selectEventsByOrganiser(organiser);
-            resetDiv.style.display = "block";
-            if (organiserObj) {
-                infoDiv.style.display = "block";
-                infoDiv.innerHTML = `<b>${organiserObj.shortName}</b> (${organiserObj.fullName}): ${organiserObj.description}
-    
-                ${organiserObj.shortName} has ${eventsList.length} competitions listed.`;
-            }
-        } else {
-            eventsList = events;
-        };
+        async function loadDataAndRenderTable() {
+            loadingDiv.style.display = 'block';
+            let dotCount = 1;
+            let cycleLoadingMessage;
+
+            cycleLoadingMessage = setInterval(() => {
+                loadingDiv.textContent = "Loading Availability" + ".".repeat(dotCount);
+                dotCount = dotCount === 5 ? 1 : dotCount + 1;
+            }, 200);
+            await loadAvailabilityCsvData();
+            clearInterval(cycleLoadingMessage);
+
+            cycleLoadingMessage = setInterval(() => {
+                loadingDiv.textContent = "Loading Events" + ".".repeat(dotCount);
+                dotCount = dotCount === 5 ? 1 : dotCount + 1;
+            }, 200);
+            await loadEventCsvData();
+            clearInterval(cycleLoadingMessage);
+
+            cycleLoadingMessage = setInterval(() => {
+                loadingDiv.textContent = "Loading Officials" + ".".repeat(dotCount);
+                dotCount = dotCount === 5 ? 1 : dotCount + 1;
+            }, 200);
+            await loadOfficialCsvData();
+            clearInterval(cycleLoadingMessage);
+
+            cycleLoadingMessage = setInterval(() => {
+                loadingDiv.textContent = "Loading Organisers" + ".".repeat(dotCount);
+                dotCount = dotCount === 5 ? 1 : dotCount + 1;
+            }, 200);
+            await loadOrganiserCsvData();
+            clearInterval(cycleLoadingMessage);
+
+            loadingDiv.style.display = 'none';
+
+            if (organiser) {
+                organiserObj = selectOrganiserByShortName(organiser);
+                eventsList = selectEventsByOrganiser(organiser);
+                resetDiv.style.display = "block";
+                if (organiserObj) {
+                    infoDiv.style.display = "block";
+                    infoDiv.innerHTML = `<b>${organiserObj.shortName}</b> (${organiserObj.fullName}): ${organiserObj.description}
         
-        const table = document.createElement('table');
-        table.classList.add('table');
-        const thead = document.createElement('thead');
-        thead.innerHTML = `
-            <tr>
-                <th>Event Name</th>
-                <th>Organiser</th>
-                <th>Event Date</th>
-                <th>Venue</th>
-                <th>Officials</th>
-                <th></th>
-            </tr>
-        `;
-        table.appendChild(thead);
-        const tbody = document.createElement('tbody');
-        eventsList.forEach(event => {
-            const row = document.createElement('tr');
-            const organiserLink = updateURLParam('organiser', event.organiser);
-            const { yesCount: yes, maybeCount: maybe } = officialCountByEventId(event.eventID);
-            row.innerHTML = `
-                <td>${event.eventName}</td>
-                <td><a href="${organiserLink}">${event.organiser}</a></td>
-                <td>${event.prettyDate()}</td>
-                <td>${event.venue}</td>
-                <td>${yes} ${maybe ? `(${maybe})` : ''}</td>
-                <td><button class="btn btn-primary" onclick="showCard(${event.eventID})">Details</button></td>
+                    ${organiserObj.shortName} has ${eventsList.length} competitions listed.`;
+                }
+            } else {
+                eventsList = events;
+            };
+
+            const table = document.createElement('table');
+            table.classList.add('table');
+            const thead = document.createElement('thead');
+            thead.innerHTML = `
+                <tr>
+                    <th>Event Name</th>
+                    <th>Organiser</th>
+                    <th>Event Date</th>
+                    <th>Venue</th>
+                    <th>Officials</th>
+                    <th></th>
+                </tr>
             `;
-            tbody.appendChild(row);
-        });
-        
-        table.appendChild(tbody);
-        eventsDiv.appendChild(table);
+            table.appendChild(thead);
+
+            const tbody = document.createElement('tbody');
+            eventsList.forEach(event => {
+                const row = document.createElement('tr');
+                const organiserLink = updateURLParam('organiser', event.organiser);
+                const { yesCount: yes, maybeCount: maybe } = officialCountByEventId(event.eventID);
+                row.innerHTML = `
+                    <td>${event.eventName}</td>
+                    <td><a href="${organiserLink}">${event.organiser}</a></td>
+                    <td>${event.prettyDate()}</td>
+                    <td>${event.venue}</td>
+                    <td>${yes} ${maybe ? `(${maybe})` : ''}</td>
+                    <td><button class="btn btn-primary" onclick="showCard(${event.eventID})">Details</button></td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            table.appendChild(tbody);
+            eventsDiv.appendChild(table);
+        }
+
 
         function showCard(eventID) {
             const cardBody = document.getElementById('cardBody');
@@ -188,6 +234,8 @@
             url.searchParams.set(param, value);
             return url.toString();
         }
+
+        loadDataAndRenderTable();
     </script>
 </body>
 </html>

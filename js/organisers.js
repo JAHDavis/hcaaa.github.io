@@ -1,3 +1,5 @@
+let organisers = [];
+
 class Organiser {
   constructor(shortName, fullName, description) {
     this.shortName = shortName;
@@ -12,10 +14,15 @@ function parseOrganiserCsv(csvText) {
     .map(columns => new Organiser(...columns));
 }
 
-const organiserCsvData = `Herts SAA,Hertfordshire Schools Athletics Association,The HSAA is responsible for organising county schools championships within Hertfordshire and also puts on a schools league.
-Herts CAAA,Hertfordshire County Amateur Athletic Association,The HCAAA is the county body for athletics within Hertfordshire organising championships across various disciplines`;
-
-const organisers = parseOrganiserCsv(organiserCsvData);
+async function loadOrganiserCsvData() {
+  const response = await fetch('data/organisers.csv');
+  if (!response.ok) {
+    console.error('Error fetching organisers CSV file');
+    return;
+  }
+  const csvText = await response.text();
+  organisers = parseOrganiserCsv(csvText);
+}
 
 function selectOrganiserByShortName(shortName) {
   return organisers.find(organiser => organiser.shortName === shortName);

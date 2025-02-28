@@ -1,3 +1,5 @@
+let availabilities = [];
+
 class Availability {
   constructor(eventID, officialID, status) {
     if (isNaN(eventID) || isNaN(officialID)) {
@@ -15,9 +17,15 @@ function parseAvailabilityCsv(csvText) {
     .map(columns => new Availability(...columns));
 }
 
-const availabilityCsvData = `17,1,Yes`;
-
-const availabilities = parseAvailabilityCsv(availabilityCsvData);
+async function loadAvailabilityCsvData() {
+  const response = await fetch('data/availability.csv');
+  if (!response.ok) {
+    console.error('Error fetching availability CSV file');
+    return;
+  }
+  const csvText = await response.text();
+  availabilities = parseAvailabilityCsv(csvText);
+}
 
 function officialsByEventID(eventID, officials, status) {
   const officialIDs = availabilities
