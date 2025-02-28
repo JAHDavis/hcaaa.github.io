@@ -31,6 +31,10 @@ class Event {
       return '';
     }
   }
+
+  availableOfficials(officials) {
+    return availableOfficialsByEventID(this.eventID, officials);
+  }
 }
 
 function parseEventCsv(csvText) {
