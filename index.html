@@ -28,6 +28,16 @@
             padding: 10px;
             font-size: 15px;
         }
+        .reset-bar {
+            background-color: #000;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 15px;
+        }
+        .reset-bar a {
+            color: #FFF;
+            text-decoration: none;
+        }
         .overlay-card {
             display: none;
             position: fixed;
@@ -56,6 +66,7 @@
         Hertfordshire Officials Events List
     </div>
     <div class="subheader-bar" id="infodiv"></div>
+    <div class="reset-bar" id="resetdiv" style="display: none"><a class="reset-a-tag" href="./">Reset Filter</a></div>
     <div id="eventsdiv"></div>
     <div class="overlay-card" id="overlayCard">
         <div class="card">
@@ -71,6 +82,7 @@
     <script>
         const infoDiv = document.getElementById('infodiv');
         const eventsDiv = document.getElementById('eventsdiv');
+        const resetDiv = document.getElementById('resetdiv');
 
         const params = new URLSearchParams(window.location.search);
         const organiser = params.get("organiser");
@@ -78,6 +90,7 @@
         if (organiser) {
             organiserObj = selectOrganiserByShortName(organiser);
             eventsList = selectEventsByOrganiser(organiser);
+            resetDiv.style.display = "block"
             if (organiserObj) {
                 infoDiv.innerHTML = `<b>${organiserObj.shortName}</b> (${organiserObj.fullName}): ${organiserObj.description}
     
