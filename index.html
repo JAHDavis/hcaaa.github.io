@@ -72,9 +72,9 @@
         } else {
             eventsList = events;
         };
-
+        
         if (organiser) {
-            const organiserObj = ‎selectOrganiserByShortName(organiser);
+            organiserObj = ‎selectOrganiserByShortName(organiser);
             infoDiv.innerHTML = `<b>${organiserObj.shortName}</b> (${organiserObj.fullName}): ${organiserObj.description}
 
             ${organiserObj.shortName} has ${eventsList.length} competitions listed.
