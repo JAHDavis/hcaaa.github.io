@@ -24,6 +24,11 @@ async function loadAvailabilityCsvData() {
     return;
   }
   const csvText = await response.text();
+  if (!csvText.trim()) {
+    console.warn('CSV file is empty');
+    availabilities = [];
+    return;
+  }
   availabilities = parseAvailabilityCsv(csvText);
 }
 

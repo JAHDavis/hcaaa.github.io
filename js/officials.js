@@ -28,6 +28,11 @@ async function loadOfficialCsvData() {
     return;
   }
   const csvText = await response.text();
+  if (!csvText.trim()) {
+    console.warn('CSV file is empty');
+    officials = [];
+    return;
+  }
   officials = parseOfficialCsv(csvText);
 }
 

@@ -55,6 +55,11 @@ async function loadEventCsvData() {
     return;
   }
   const csvText = await response.text();
+  if (!csvText.trim()) {
+    console.warn('CSV file is empty');
+    events = [];
+    return;
+  }
   events = parseEventCsv(csvText);
 }
 

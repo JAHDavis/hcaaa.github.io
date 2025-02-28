@@ -21,6 +21,11 @@ async function loadOrganiserCsvData() {
     return;
   }
   const csvText = await response.text();
+  if (!csvText.trim()) {
+    console.warn('CSV file is empty');
+    organisers = [];
+    return;
+  }
   organisers = parseOrganiserCsv(csvText);
 }
 
