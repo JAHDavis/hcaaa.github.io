@@ -143,6 +143,10 @@
             if (timings) {
                 cardBody.innerHTML += `<p><strong>Timings:</strong> ${timings}</p>`;
             }
+            const availableOfficials = selectedEvent.availableOfficials(officials)
+            if (availableOfficials) {
+                cardBody.innerHtml += `<p><strong>Available Officials:</strong> ${availableOfficials}</p>`;
+            }
             document.getElementById('overlayCard').style.display = 'flex';
         }
 
