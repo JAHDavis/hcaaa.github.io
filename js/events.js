@@ -126,9 +126,9 @@ const eventCsvData = `1,HSAA Academies Cup,Indoor Schools Matches,Herts SAA,13/0
 85,Eastern Combined Events Championships,Regional Champs,Eastern AA,28/09/2025,Peterborough,TF,,
 86,Hertfordshire League Plate Final,Schools League,Herts SAA,30/06/2025,Hemel Hempstead,TF,14:00,17:15
 87,Hertfordshire League Final,Schools League,Herts SAA,01/07/2025,Hemel Hempstead,TF,14:00,17:15
-88,Dacorum District Champs,Schools District Champs,Herts SAA,02/07/2025,Hemel Hempstead,TF,,`
+88,Dacorum District Champs,Schools District Champs,Herts SAA,02/07/2025,Hemel Hempstead,TF,,`;
 
-const events = parseEventCsv(eventCsvData)
+const events = parseEventCsv(eventCsvData);
 
 function selectEventById(eventID) {
   return events.find(event => event.eventID === eventID);
