@@ -73,19 +73,21 @@
 
         const params = new URLSearchParams(window.location.search);
         const organiser = params.get("organiser");
-        if (organiser) { 
+
+        if (organiser) {
+            organiserObj = selectOrganiserByShortName(organiser);
+            if (organiserObj) {
+                infoDiv.innerHTML = `<b>${organiserObj.shortName}</b> (${organiserObj.fullName}): ${organiserObj.description}
+    
+                ${organiserObj.shortName} has ${eventsList.length} competitions listed.`;
+            }
+        }
+        
+        if (organiser && organiserObj) { 
             eventsList = selectEventsByOrganiser(organiser);
         } else {
             eventsList = events;
         };
-        
-        if (organiser) {
-            organiserObj = selectOrganiserByShortName(organiser);
-            infoDiv.innerHTML = `<b>${organiserObj.shortName}</b> (${organiserObj.fullName}): ${organiserObj.description}
-
-            ${organiserObj.shortName} has ${eventsList.length} competitions listed.
-            `;
-        }
         
         const table = document.createElement('table');
         table.classList.add('table');
