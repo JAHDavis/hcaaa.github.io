@@ -34,3 +34,8 @@ async function loadOfficialCsvData() {
 function selectOfficialById(officialID) {
   return officials.find(official => official.officialID === officialID);
 }
+
+function eventsForOfficial(officialID) {
+  const availableEvents = availabilityForOfficialID(officialID)
+  return availableEvents.map(availability => selectEventById(availability.eventID));
+}

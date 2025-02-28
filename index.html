@@ -56,6 +56,12 @@
             justify-content: center;
             align-items: center;
         }
+        .table tr.avail-y td {
+            background-color: #769A62;
+        }
+        .table tr.avail-m td {
+            background-color: #C6CACF;
+        }
         .card {
             width: 50%;
         }
@@ -69,6 +75,10 @@
         .officials-table {
             width: 100%;
             text-align: center;
+        }
+        .official-link {
+            color: #FFF;
+            text-decoration: none;
         }
         .status-yes {
             background-color: #148942;
@@ -108,6 +118,7 @@
         const resetDiv = document.getElementById('resetdiv');
         const params = new URLSearchParams(window.location.search);
         const organiser = params.get("organiser");
+        const official = Number(params.get("official"));
 
         async function loadDataAndRenderTable() {
             loadingDiv.style.display = 'block';
@@ -154,6 +165,14 @@
         
                     ${organiserObj.shortName} has ${eventsList.length} competitions listed.`;
                 }
+            } else if (official) {
+                officialObj = selectOfficialById(official);
+                eventsList = eventsForOfficial(official);
+                resetDiv.style.display = "block";
+                if (officialObj) {
+                    infoDiv.style.display = "block";
+                    infoDiv.innerHTML = `<b>${officialObj.fullName()}</b> has availability defined for ${eventsList.length} competition${eventsList.length > 1 ? 's' : ''}`
+                }
             } else {
                 eventsList = events;
             };
@@ -176,6 +195,16 @@
             const tbody = document.createElement('tbody');
             eventsList.forEach(event => {
                 const row = document.createElement('tr');
+                if (official) {
+                    const avail = availabilityForOfficialAndEventID(official, event.eventID);
+                    if (avail && avail.status) {
+                        if (avail.status == "Yes") {
+                            row.classList.add('avail-y');
+                        } else if (avail.status == "Maybe") {
+                            row.classList.add('avail-m');
+                        }
+                    }
+                }
                 const organiserLink = updateURLParam('organiser', event.organiser);
                 const { yesCount: yes, maybeCount: maybe } = officialCountByEventId(event.eventID);
                 row.innerHTML = `
@@ -214,10 +243,11 @@
             if (availableOfficials.length > 0 || maybeOfficials.length > 0) {
                 let tableContent = `<p><strong>Officials:</strong></p><table class="officials-table"><tbody>`;
                 availableOfficials.forEach(official => {
-                    tableContent += `<tr><td class="status-yes">${official}</td></tr>`;
+                    const officialLink = updateURLParam('official', official.officialID);
+                    tableContent += `<tr><td class="status-yes"><a class="official-link" href="${officialLink}">${official.fullName()}</a></td></tr>`;
                 });
                 maybeOfficials.forEach(official => {
-                    tableContent += `<tr><td class="status-maybe">${official}</td></tr>`;
+                    tableContent += `<tr><td class="status-maybe">${official.fullName()}</td></tr>`;
                 });
                 tableContent += `</tbody></table>`;
                 cardBody.innerHTML += tableContent;
@@ -231,6 +261,7 @@
 
         function updateURLParam(param, value) {
             let url = new URL(window.location.href);
+            url.search = '';
             url.searchParams.set(param, value);
             return url.toString();
         }

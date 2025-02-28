@@ -32,9 +32,7 @@ function officialsByEventID(eventID, officials, status) {
     .filter(avail => avail.eventID == eventID && avail.status === status)
     .map(avail => avail.officialID);
 
-  return officials
-    .filter(official => officialIDs.includes(official.officialID))
-    .map(official => official.fullName());
+  return officials.filter(official => officialIDs.includes(official.officialID));
 }
 
 function officialCountByEventId(eventID) {
@@ -42,4 +40,12 @@ function officialCountByEventId(eventID) {
   const maybeCount = availabilities.filter(avail => avail.eventID == eventID && avail.status === "Maybe").length;
 
   return {yesCount, maybeCount};
+}
+
+function availabilityForOfficialID(officialID) {
+  return availabilities.filter(availability => availability.officialID === officialID);
+}
+
+function availabilityForOfficialAndEventID(officialID, eventID) {
+  return availabilities.find(availability => availability.officialID === officialID && availability.eventID === eventID);
 }
