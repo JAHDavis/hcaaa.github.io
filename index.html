@@ -65,7 +65,7 @@
     <div class="header-bar">
         Hertfordshire Officials Events List
     </div>
-    <div class="subheader-bar" id="infodiv"></div>
+    <div class="subheader-bar" id="infodiv" style="display: none"></div>
     <div class="reset-bar" id="resetdiv" style="display: none"><a class="reset-a-tag" href="./">Reset Filter</a></div>
     <div id="eventsdiv"></div>
     <div class="overlay-card" id="overlayCard">
@@ -90,8 +90,9 @@
         if (organiser) {
             organiserObj = selectOrganiserByShortName(organiser);
             eventsList = selectEventsByOrganiser(organiser);
-            resetDiv.style.display = "block"
+            resetDiv.style.display = "block";
             if (organiserObj) {
+                infoDiv.style.display = "block";
                 infoDiv.innerHTML = `<b>${organiserObj.shortName}</b> (${organiserObj.fullName}): ${organiserObj.description}
     
                 ${organiserObj.shortName} has ${eventsList.length} competitions listed.`;
