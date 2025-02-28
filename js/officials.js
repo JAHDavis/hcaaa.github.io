@@ -5,7 +5,7 @@ class Official {
     this.lastName = lastName;
   }
 
-  fullname() {
+  fullName() {
     return `${this.firstName} ${this.lastName}`
   }
 }
