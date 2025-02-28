@@ -4,6 +4,10 @@ class Official {
     this.firstName = firstName;
     this.lastName = lastName;
   }
+
+  fullname() {
+    return `${this.firstName} ${this.lastName}`
+  }
 }
 
 function parseOfficialCsv(csvText) {
