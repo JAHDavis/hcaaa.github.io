@@ -59,6 +59,18 @@
             position: absolute;
             right: 0;
         }
+        .officials-table {
+            width: 100%;
+            text-align: center;
+        }
+        .status-yes {
+            background-color: #148942;
+            color: #FFF;
+        }
+        .status-maybe {
+            background-color: #878F97;
+            color: #FFF;
+        }
     </style>
 </head>
 <body>
@@ -109,8 +121,10 @@
         thead.innerHTML = `
             <tr>
                 <th>Event Name</th>
+                <th>Organiser</th>
                 <th>Event Date</th>
                 <th>Venue</th>
+                <th>Officials</th>
                 <th></th>
             </tr>
         `;
@@ -118,11 +132,15 @@
         const tbody = document.createElement('tbody');
         eventsList.forEach(event => {
             const row = document.createElement('tr');
+            const organiserLink = updateURLParam('organiser', event.organiser);
+            const { yesCount: yes, maybeCount: maybe } = officialCountByEventId(event.eventID);
             row.innerHTML = `
                 <td>${event.eventName}</td>
+                <td><a href="${organiserLink}">${event.organiser}</a></td>
                 <td>${event.prettyDate()}</td>
                 <td>${event.venue}</td>
-                <td><button class="btn btn-primary" onclick="showCard('${event.eventID}')">Details</button></td>
+                <td>${yes} ${maybe ? `(${maybe})` : ''}</td>
+                <td><button class="btn btn-primary" onclick="showCard(${event.eventID})">Details</button></td>
             `;
             tbody.appendChild(row);
         });
@@ -145,15 +163,30 @@
             if (timings) {
                 cardBody.innerHTML += `<p><strong>Timings:</strong> ${timings}</p>`;
             }
-            const availableOfficials = selectedEvent.availableOfficials(officials)
-            if (availableOfficials) {
-                cardBody.innerHtml += `<p><strong>Available Officials:</strong> ${availableOfficials}</p>`;
+            const availableOfficials = selectedEvent.officials(officials, "Yes")
+            const maybeOfficials = selectedEvent.officials(officials, "Maybe")
+            if (availableOfficials.length > 0 || maybeOfficials.length > 0) {
+                let tableContent = `<p><strong>Officials:</strong></p><table class="officials-table"><tbody>`;
+                availableOfficials.forEach(official => {
+                    tableContent += `<tr><td class="status-yes">${official}</td></tr>`;
+                });
+                maybeOfficials.forEach(official => {
+                    tableContent += `<tr><td class="status-maybe">${official}</td></tr>`;
+                });
+                tableContent += `</tbody></table>`;
+                cardBody.innerHTML += tableContent;
             }
             document.getElementById('overlayCard').style.display = 'flex';
         }
 
         function closeCard() {
             document.getElementById('overlayCard').style.display = 'none';
+        }
+
+        function updateURLParam(param, value) {
+            let url = new URL(window.location.href);
+            url.searchParams.set(param, value);
+            return url.toString();
         }
     </script>
 </body>

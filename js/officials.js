@@ -1,6 +1,9 @@
 class Official {
   constructor(officialID, firstName, lastName) {
-    this.officialID = officialID;
+    if (isNaN(officialID)) {
+      throw new Error("officialID must be a number");
+    }
+    this.officialID = Number(officialID);
     this.firstName = firstName;
     this.lastName = lastName;
   }

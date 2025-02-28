@@ -1,6 +1,9 @@
 class Event {
   constructor(eventID, eventName, eventCategory, organiser, eventDate, venue, discipline, startTime, finishTime) {
-    this.eventID = eventID;
+    if (isNaN(eventID)) {
+      throw new Error("eventID must be a number");
+    }
+    this.eventID = Number(eventID);
     this.eventName = eventName;
     this.eventCategory = eventCategory;
     this.organiser = organiser;
@@ -32,8 +35,8 @@ class Event {
     }
   }
 
-  availableOfficials(officials) {
-    return availableOfficialsByEventID(this.eventID, officials);
+  officials(officials, status) {
+    return officialsByEventID(this.eventID, officials, status);
   }
 }
 
