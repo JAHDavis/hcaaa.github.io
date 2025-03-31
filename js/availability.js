@@ -2,10 +2,6 @@ let availabilities = [];
 
 class Availability {
   constructor(eventID, officialID, status) {
-    console.log(typeof eventID)
-    console.log(eventID)
-    console.log(typeof officialID)
-    console.log(officialID)
     if (isNaN(eventID) || isNaN(officialID)) {
       throw new Error("eventID and officialID must be numbers");
     }
