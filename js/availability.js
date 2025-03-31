@@ -2,6 +2,10 @@ let availabilities = [];
 
 class Availability {
   constructor(eventID, officialID, status) {
+    console.log(typeof eventID)
+    console.log(eventID)
+    console.log(typeof officialID)
+    console.log(officialID)
     if (isNaN(eventID) || isNaN(officialID)) {
       throw new Error("eventID and officialID must be numbers");
     }
@@ -13,6 +17,8 @@ class Availability {
 
 function parseAvailabilityCsv(csvText) {
   return csvText.split('\n')
+    .map(row => row.trim())
+    .filter(row => row)
     .map(row => row.split(',').map(item => item.trim()))
     .map(columns => new Availability(...columns));
 }

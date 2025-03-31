@@ -10,6 +10,8 @@ class Organiser {
 
 function parseOrganiserCsv(csvText) {
   return csvText.split('\n')
+    .map(row => row.trim())
+    .filter(row => row)
     .map(row => row.split(',').map(item => item.trim()))
     .map(columns => new Organiser(...columns));
 }
