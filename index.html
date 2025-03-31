@@ -72,6 +72,10 @@
             position: absolute;
             right: 10px;
         }
+        .table-container {
+            max-height: 200px;
+            overflow-y: auto;
+        }
         .officials-table {
             width: 100%;
             text-align: center;
@@ -241,7 +245,7 @@
             const availableOfficials = selectedEvent.officials(officials, "Yes")
             const maybeOfficials = selectedEvent.officials(officials, "Maybe")
             if (availableOfficials.length > 0 || maybeOfficials.length > 0) {
-                let tableContent = `<p><strong>Officials:</strong></p><table class="officials-table"><tbody>`;
+                let tableContent = `<p><strong>Officials:</strong></p><div class="table-container"><table class="officials-table"><tbody>`;
                 availableOfficials.forEach(official => {
                     const officialLink = updateURLParam('official', official.officialID);
                     tableContent += `<tr><td class="status-yes"><a class="official-link" href="${officialLink}">${official.fullName()}</a></td></tr>`;
@@ -249,7 +253,7 @@
                 maybeOfficials.forEach(official => {
                     tableContent += `<tr><td class="status-maybe">${official.fullName()}</td></tr>`;
                 });
-                tableContent += `</tbody></table>`;
+                tableContent += `</tbody></table></div>`;
                 cardBody.innerHTML += tableContent;
             }
             document.getElementById('overlayCard').style.display = 'flex';
